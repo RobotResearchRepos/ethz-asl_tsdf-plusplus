@@ -6,14 +6,20 @@ RUN apt-get update \
  && apt-get install -y git \
  && rm -rf /var/lib/apt/lists/*
 
-# Clone code repository
+# Install apt packages
+RUN apt-get update \
+ && apt-get install -y python3-catkin-tools python3-osrf-pycommon \
+ && rm -rf /var/lib/apt/lists/*
+
+# Initialize workspace
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
  && mkdir -p /catkin_ws/src && cd /catkin_ws \
  && catkin init \
  && catkin config --extend /opt/ros/$ROS_VERSION --merge-devel \
  && catkin config --cmake-args -DCMAKE_CXX_STANDARD=14 -DCMAKE_BUILD_TYPE=Release \
  && wstool init src
- 
+
+# Clone code repository
 RUN git clone --recurse-submodules \
       https://github.com/RobotResearchRepos/ethz-asl_tsdf-plusplus \
       /catkin_ws/src/tsdf-plusplus
