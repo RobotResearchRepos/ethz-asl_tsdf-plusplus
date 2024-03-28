@@ -15,7 +15,7 @@ RUN apt-get update \
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
  && mkdir -p /catkin_ws/src && cd /catkin_ws \
  && catkin init \
- && catkin config --extend /opt/ros/$ROS_VERSION --merge-devel \
+ && catkin config --extend /opt/ros/$ROS_DISTRO --merge-devel \
  && catkin config --cmake-args -DCMAKE_CXX_STANDARD=14 -DCMAKE_BUILD_TYPE=Release \
  && wstool init src
 
